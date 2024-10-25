@@ -1,3 +1,5 @@
+require('dotenv').config(); // Load environment variables from .env file
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -12,10 +14,10 @@ app.use(bodyParser.json());
 
 // MongoDB connection string (update with your MongoDB URI)
 //const mongoURI = 'mongodb://localhost:27017/formDB'; // For local MongoDB
-const mongoURI = 'mongodb+srv://nicholasdibya:VecnkVvMKJTCTmL2@cluster0.xi76v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';  // For MongoDB Atlas
+  // For MongoDB Atlas
 
 // Connect to MongoDB using Mongoose without deprecated options
-mongoose.connect(mongoURI)
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected successfully'))
   .catch(err => console.log(err));
 
