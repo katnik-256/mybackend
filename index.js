@@ -31,6 +31,10 @@ const formSchema = new mongoose.Schema({
 
 // Create a Mongoose model
 const Form = mongoose.model('Form', formSchema);
+app.get('/submit-form', (req, res) => {
+  res.send('Welcome to the backend!');
+});
+
 
 // Route to handle form submission
 app.post('/submit-form', async (req, res) => {
