@@ -47,6 +47,10 @@ const Form = mongoose.model('Form', formSchema);
 app.get('/submit-form', (req, res) => {
   res.send('Welcome to the backend!');
 });
+//Route for get.
+app.get('/', (req, res) => {
+  res.send('Server is running!');
+});
 
 
 // Route to handle form submission
