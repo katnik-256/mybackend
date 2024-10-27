@@ -7,8 +7,19 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
+const allowedOrigins = [
+  'https://kikomeko.netlify.app',  // Your deployed front end
+  'http://127.0.0.1:5500',         // Local development environment
+];
+
 app.use(cors({
-  origin: 'https://kikomeko.netlify.app',  // replace with your actual Netlify domain
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
 }));
 // Use body-parser to handle URL-encoded data from the form
 app.use(bodyParser.urlencoded({ extended: true }));
