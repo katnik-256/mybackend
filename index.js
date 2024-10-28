@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const nodemailer = require('nodemailer'); // Import Nodemailer
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -57,6 +58,29 @@ app.get('/', (req, res) => {
 app.post('/submit-form', async (req, res) => {
   // Extract form data from the request body
   const { name, phoneNumber, email, message } = req.body;
+
+  
+  // Configure Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail', // or another email service provider
+  auth: {
+    user: process.env.EMAIL_USERNAME, // Your email
+    pass: process.env.EMAIL_PASSWORD, // Your email password or app-specific password
+  },
+});
+
+// Function to send notification email
+const sendNotificationEmail = async (formData) => {
+  const mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: 'katnik256@gmIL.com', // Replace with your email address
+    subject: 'New Form Submission',
+    text: `New form submission:\nName: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
 
   // Create a new form document
   const newForm = new Form({
